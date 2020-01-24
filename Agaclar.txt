@@ -1,0 +1,126 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct agac{
+    int deger;
+    struct agac *sol;
+    struct agac *sag;
+};
+//--------------------------------------------------------------------------------------------------//
+int solmu;
+struct agac *yeni,*gecici,*silinecek,*geri;
+struct agac * AgacOlustur(int eleman){
+    struct agac *root;
+    root=(struct agac*)malloc(sizeof(struct agac));
+    root->sol=NULL;
+    root->sag=NULL;
+    root->deger=eleman;
+    return root;
+}
+//--------------------------------------------------------------------------------------------------//
+struct agac* AgacaElemanEkle(struct agac *root,int eleman){//verilen sayýyý, verilen kökün aðacýna ekler
+    if(root==NULL){
+    	return AgacOlustur(eleman);
+	}
+	else if(eleman > root->deger){
+		root->sag=AgacaElemanEkle(root->sag,eleman);
+	}
+	else if(eleman < root->deger){
+		root->sol=AgacaElemanEkle(root->sol,eleman);
+	}
+	else{
+		printf("eleman zaten var..\n");
+	}
+	return root;
+}
+//--------------------------------------------------------------------------------------------------//
+void AgacYazdir(struct agac *root){//PreOrder
+    if(root==NULL) return;
+    printf("%d ",root->deger);
+    AgacYazdir(root->sol);
+    AgacYazdir(root->sag);
+}
+//--------------------------------------------------------------------------------------------------//
+struct agac* AgactanSil(struct agac *root,int eleman){//verilen kökün aðacýndaki bir elemaný bulup siler, aðacýn kopan elemanlarýný baðlar
+    if(root==NULL)
+        return NULL;
+    if(eleman==root->deger){
+        struct agac *iter=root;
+        struct agac *geri;
+        if(root->sol==NULL && root->sag==NULL)//eleman yapraksa çaðrýldýðý yere null döndürülerek koparýlýr
+            return NULL;
+        if(root->sag!=NULL){//burdan if'in bitimine kadar iþlemler sað taraf üzerinden yapýlýr eðer if'e girilmez ise alt tarafta sola göre yapýlýr
+            //saðýn en soluna gidilir
+			geri=iter;
+            iter=iter->sag;
+            while(iter->sol!=NULL){
+            	geri=iter;
+                iter=iter->sol;
+			}
+			//saðýn en solu silinecek yere yazýlýr ve gidilen yer silinmek üzere fonksiyonu yollanýr
+            root->deger=iter->deger;
+            if(iter->sag!=NULL){//bu blok eðer saðýn en soluna gidildiðinde onun da saðý varsa kullanýlýr
+            	if(root==geri)
+            		geri->sag=iter->sag;
+            	else
+                	geri->sol=iter->sag;
+        		iter->sag=NULL;
+			}
+            root->sag=AgactanSil(root->sag,iter->deger);
+            return root;
+        }//sola göre ayný iþlemler
+        	geri=iter;
+            iter=iter->sol;
+            while(iter->sag!=NULL){
+            	geri=iter;
+				iter=iter->sag;
+			}
+            root->deger=iter->deger;
+            if(iter->sol!=NULL){//bu blok eðer saðýn en soluna gidildiðinde onun da saðý varsa kullanýlýr
+            	if(root==geri)//sol child ise
+            		geri->sol=iter->sag;
+            	else//sað child ise
+                	geri->sag=iter->sag;
+                iter->sol=NULL;
+    		}//solun en saðý yaprak olur
+            root->sol=AgactanSil(root->sol,iter->deger);
+            return root;
+    }
+	//elemaný bulamazsa sað veya sola bakýlýr
+    if(eleman> root->deger){
+        root->sag=AgactanSil(root->sag,eleman);
+        return root;
+    }
+    root->sol=AgactanSil(root->sol,eleman);
+    return root;
+}
+//--------------------------------------------------------------------------------------------------//
+int main()
+{
+    struct agac *kok1=NULL;
+    kok1=AgacOlustur(12);
+    kok1=AgacaElemanEkle(kok1,35);
+    kok1=AgacaElemanEkle(kok1,10);
+    kok1=AgacaElemanEkle(kok1,25);
+    kok1=AgacaElemanEkle(kok1,5);
+    kok1=AgacaElemanEkle(kok1,11);
+    kok1=AgacaElemanEkle(kok1,40);
+    kok1=AgacaElemanEkle(kok1,45);
+    AgacYazdir(kok1);
+    printf("\n");
+    kok1=AgactanSil(kok1,35);
+    AgacYazdir(kok1);
+    printf("\n");
+    kok1=AgactanSil(kok1,12);
+    AgacYazdir(kok1);
+    printf("\n");
+    kok1=AgactanSil(kok1,10);
+    AgacYazdir(kok1);
+    printf("\n");
+    kok1=AgactanSil(kok1,5);
+    AgacYazdir(kok1);
+    printf("\n");
+    kok1=AgactanSil(kok1,11);
+    AgacYazdir(kok1);
+    printf("\n");
+    return 0;
+}
