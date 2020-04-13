@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct kuyruktut{//kuyruga eriþim
+struct kuyruktut{//kuyruga erisim
     struct kuyruk *bas;
     struct kuyruk *son;
 };
