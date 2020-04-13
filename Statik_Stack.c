@@ -3,7 +3,7 @@
 struct stack{
     int *liste;
     int kapasite;
-    int ust;//stack içindeki ilk boş yeri gösterir
+    int ust;//stack iÃ§indeki ilk boÃ¾ yeri gÃ¶sterir
 };
 //---------------------------------------------------------------------//
 void stackkaparttir(struct stack *stc){
@@ -11,7 +11,7 @@ void stackkaparttir(struct stack *stc){
     int *yeniliste;
     yeniliste=(int*)malloc(sizeof(int)* stc->kapasite);
     int i;
-    for(i=0;i<stc->ust;i++){//eski dizinin elemanları yeni oluşturulan diziye atılır
+    for(i=0;i<stc->ust;i++){//eski dizinin elemanlarÃ½ yeni oluÃ¾turulan diziye atÃ½lÃ½r
         yeniliste[i]=stc->liste[i];
     }
     stc->liste=yeniliste;
@@ -50,8 +50,8 @@ void stackyaz(struct stack *stc){
 //---------------------------------------------------------------------//
 int main()
 {
-	//stackyarat fonksiyonu ilk durum için çağrılmalıdır
-    struct stack *stack1=stackyarat(4);//4 elemanlı diziyi tutan stack yapısı oluşur
+	//stackyarat fonksiyonu ilk durum iÃ§in Ã§aÃ°rÃ½lmalÃ½dÃ½r
+    struct stack *stack1=stackyarat(4);//4 elemanlÃ½ diziyi tutan stack yapÃ½sÃ½ oluÃ¾ur
     stackpush(stack1,5);
     stackpush(stack1,10);
     stackpush(stack1,15);
