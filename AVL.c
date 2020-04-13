@@ -6,12 +6,12 @@ struct agac{
 	struct agac *sol;
 	int yukseklik;
 };
-///--------------Sağ Rotasyon--------------------------------------------------------------///
+///--------------SaÄŸ Rotasyon--------------------------------------------------------------///
 struct agac* rr(struct agac *root){
 	struct agac *child=root->sol;
 	root->sol=child->sag;
 	child->sag=root;
-	root->yukseklik=max(yukseklikbul(root->sag),yukseklikbul(root->sol))+1;//ilk önce her zaman rotation ile aşağı inenin yüksekliği hesaplanır
+	root->yukseklik=max(yukseklikbul(root->sag),yukseklikbul(root->sol))+1;//ilk Ã¶nce her zaman rotation ile aÅŸaÄŸÄ± inenin yÃ¼ksekliÄŸi hesaplanÄ±r
 	child->yukseklik=max(yukseklikbul(child->sag),yukseklikbul(child->sol))+1;
 	return child;
 }
@@ -28,7 +28,7 @@ struct agac* lr(struct agac *root){
 int max(int a,int b){
 	return (a>b)? a : b;
 }
-///--------------Yükseklik------------------------------------------------------------///
+///--------------YÃ¼kseklik------------------------------------------------------------///
 int yukseklikbul(struct agac *root){
 	if(root==NULL) return 0;
 	return root->yukseklik;
@@ -49,20 +49,20 @@ struct agac* olustur(int sayi){
 }
 ///--------------Ekle-----------------------------------------------------------------///
 struct agac* ekle(struct agac *root,int sayi){//ekle,yukseklik ayarla,dengeyi bul,rotation bak(4 case)
-	//bst recursive eklemesi yapılır
+	//bst recursive eklemesi yapÄ±lÄ±r
 	if(root==NULL)
 		return(olustur(sayi));
 	if(sayi > root->veri)
 		root->sag=ekle(root->sag,sayi);
 	else if(sayi < root->veri)
 		root->sol=ekle(root->sol,sayi);
-	else//aynı sayı girilirse
+	else//aynÄ± sayÄ± girilirse
 		return root;
 	//yukseklik ayarla
 	root->yukseklik=max(yukseklikbul(root->sag),yukseklikbul(root->sol))+1;
-	//her bir recursive çağrı için geri dönerken denge sayısı bulunur
+	//her bir recursive Ã§aÄŸrÄ± iÃ§in geri dÃ¶nerken denge sayÄ±sÄ± bulunur
 	int dengesayi=denge(root);
-	//Burda da denge bozulmuş mu bakılır
+	//Burda da denge bozulmuÅŸ mu bakÄ±lÄ±r
 	if(dengesayi>1 && sayi < root->sol->veri){//sol sol durumu
 		return rr(root);
 	}
@@ -77,10 +77,10 @@ struct agac* ekle(struct agac *root,int sayi){//ekle,yukseklik ayarla,dengeyi bu
 		root->sag=rr(root->sag);
 		return lr(root);
 	}
-	//4 koşula da girilmezse değişmemiş olan root döndürülür. 
+	//4 koÅŸula da girilmezse deÄŸiÅŸmemiÅŸ olan root dÃ¶ndÃ¼rÃ¼lÃ¼r. 
 	return root;
 }
-///--------------Yazdır(preorder)------------------------------------------------///
+///--------------YazdÄ±r(preorder)------------------------------------------------///
 void yaz(struct agac *root){
 	if(root==NULL)	return;
 	printf("%d:%d ",root->veri,root->yukseklik);
@@ -89,7 +89,7 @@ void yaz(struct agac *root){
 }
 ///--------------Sil-------------------------------------------------------------///
 struct agac * sil(struct agac *root,int sayi){
-	//silme işlemi aynı ağaçlardaki gibi yapılır
+	//silme iÅŸlemi aynÄ± aÄŸaÃ§lardaki gibi yapÄ±lÄ±r
 	if(root==NULL)
 		return root;
 	if(sayi > root->veri)
@@ -116,7 +116,7 @@ struct agac * sil(struct agac *root,int sayi){
 			gecici->sag=NULL;
 			root->sag=sil(root->sag,gecici->veri);
 		}
-		else{//ikisi de null değil ve sag yoksa son seçenek sol vardır, soldan alınır leaf silinir. Aynısının ters yönlüsü
+		else{//ikisi de null deÄŸil ve sag yoksa son seÃ§enek sol vardÄ±r, soldan alÄ±nÄ±r leaf silinir. AynÄ±sÄ±nÄ±n ters yÃ¶nlÃ¼sÃ¼
 			struct agac *gecici=root->sol;
 			struct agac *geri;
 			while(gecici->sag!=NULL){
@@ -134,8 +134,8 @@ struct agac * sil(struct agac *root,int sayi){
 			root->sol=sil(root->sol,gecici->veri);
 		}
 	}
-	//sildikten sonra ise AVL ağacı bozulmuş mu bakılır
-	if(root == NULL)//agacın sadece kökü varsa
+	//sildikten sonra ise AVL aÄŸacÄ± bozulmuÅŸ mu bakÄ±lÄ±r
+	if(root == NULL)//agacÄ±n sadece kÃ¶kÃ¼ varsa
 		return root;
 	//yukseklik hesapla
 	root->yukseklik=max(yukseklikbul(root->sag),yukseklikbul(root->sol))+1;
@@ -158,7 +158,7 @@ struct agac * sil(struct agac *root,int sayi){
 			return lr(root);
 		}
 	}
-	//4 duruma da girilmezse o düğüm için sıkıntı yok demektir. root döndürülür
+	//4 duruma da girilmezse o dÃ¼ÄŸÃ¼m iÃ§in sÄ±kÄ±ntÄ± yok demektir. root dÃ¶ndÃ¼rÃ¼lÃ¼r
 	return root;
 }
 ///--------------main------------------------------------------------------------///
