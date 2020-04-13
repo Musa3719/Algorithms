@@ -17,7 +17,7 @@ struct agac * AgacOlustur(int eleman){
     return root;
 }
 //--------------------------------------------------------------------------------------------------//
-struct agac* AgacaElemanEkle(struct agac *root,int eleman){//verilen sayýyý, verilen kökün aðacýna ekler
+struct agac* AgacaElemanEkle(struct agac *root,int eleman){//verilen sayÄ±yÄ±, verilen kÃ¶kÃ¼n aÄŸacÄ±na ekler
     if(root==NULL){
     	return AgacOlustur(eleman);
 	}
@@ -40,25 +40,25 @@ void AgacYazdir(struct agac *root){//PreOrder
     AgacYazdir(root->sag);
 }
 //--------------------------------------------------------------------------------------------------//
-struct agac* AgactanSil(struct agac *root,int eleman){//verilen kökün aðacýndaki bir elemaný bulup siler, aðacýn kopan elemanlarýný baðlar
+struct agac* AgactanSil(struct agac *root,int eleman){//verilen kÃ¶kÃ¼n aÄŸacÄ±ndaki bir elemanÄ± bulup siler, aÄŸacÄ±n kopan elemanlarÄ±nÄ± baÄŸlar
     if(root==NULL)
         return NULL;
     if(eleman==root->deger){
         struct agac *iter=root;
         struct agac *geri;
-        if(root->sol==NULL && root->sag==NULL)//eleman yapraksa çaðrýldýðý yere null döndürülerek koparýlýr
+        if(root->sol==NULL && root->sag==NULL)//eleman yapraksa Ã§aÄŸrÄ±ldÄ±ÄŸÄ± yere null dÃ¶ndÃ¼rÃ¼lerek koparÄ±lÄ±r
             return NULL;
-        if(root->sag!=NULL){//burdan if'in bitimine kadar iþlemler sað taraf üzerinden yapýlýr eðer if'e girilmez ise alt tarafta sola göre yapýlýr
-            //saðýn en soluna gidilir
+        if(root->sag!=NULL){//burdan if'in bitimine kadar iÅŸlemler saÄŸ taraf Ã¼zerinden yapÄ±lÄ±r eÄŸer if'e girilmez ise alt tarafta sola gÃ¶re yapÄ±lÄ±r
+            //saÄŸÄ±n en soluna gidilir
 			geri=iter;
             iter=iter->sag;
             while(iter->sol!=NULL){
             	geri=iter;
                 iter=iter->sol;
 			}
-			//saðýn en solu silinecek yere yazýlýr ve gidilen yer silinmek üzere fonksiyonu yollanýr
+			//saÄŸÄ±n en solu silinecek yere yazÄ±lÄ±r ve gidilen yer silinmek Ã¼zere fonksiyonu yollanÄ±r
             root->deger=iter->deger;
-            if(iter->sag!=NULL){//bu blok eðer saðýn en soluna gidildiðinde onun da saðý varsa kullanýlýr
+            if(iter->sag!=NULL){//bu blok eÄŸer saÄŸÄ±n en soluna gidildiÄŸinde onun da saÄŸÄ± varsa kullanÄ±lÄ±r
             	if(root==geri)
             		geri->sag=iter->sag;
             	else
@@ -67,7 +67,7 @@ struct agac* AgactanSil(struct agac *root,int eleman){//verilen kökün aðacýndaki
 			}
             root->sag=AgactanSil(root->sag,iter->deger);
             return root;
-        }//sola göre ayný iþlemler
+        }//sola gÃ¶re aynÄ± iÅŸlemler
         	geri=iter;
             iter=iter->sol;
             while(iter->sag!=NULL){
@@ -75,17 +75,17 @@ struct agac* AgactanSil(struct agac *root,int eleman){//verilen kökün aðacýndaki
 				iter=iter->sag;
 			}
             root->deger=iter->deger;
-            if(iter->sol!=NULL){//bu blok eðer saðýn en soluna gidildiðinde onun da saðý varsa kullanýlýr
+            if(iter->sol!=NULL){//bu blok eÄŸer saÄŸÄ±n en soluna gidildiÄŸinde onun da saÄŸÄ± varsa kullanÄ±lÄ±r
             	if(root==geri)//sol child ise
             		geri->sol=iter->sag;
-            	else//sað child ise
+            	else//saÄŸ child ise
                 	geri->sag=iter->sag;
                 iter->sol=NULL;
-    		}//solun en saðý yaprak olur
+    		}//solun en saÄŸÄ± yaprak olur
             root->sol=AgactanSil(root->sol,iter->deger);
             return root;
     }
-	//elemaný bulamazsa sað veya sola bakýlýr
+	//elemanÄ± bulamazsa saÄŸ veya sola bakÄ±lÄ±r
     if(eleman> root->deger){
         root->sag=AgactanSil(root->sag,eleman);
         return root;
