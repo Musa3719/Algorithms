@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-struct kuyruktut{//kuyruğa erişim
+struct kuyruktut{//kuyruga eriÃ¾im
     struct kuyruk *bas;
     struct kuyruk *son;
 };
@@ -24,7 +24,7 @@ struct kuyruktut* kuyrukyarat(int sayi){
 //----------------------------------------------------------------------------------------//
 void kuyrukelemanekle(struct kuyruktut *kuyruktutfonk, int sayi){
     if(kuyruktutfonk==NULL){
-        printf("Kuyruk bulunamadı...");
+        printf("Kuyruk bulunamadi...");
         return;
     }
     struct kuyruk *yeni;
