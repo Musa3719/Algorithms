@@ -3,7 +3,7 @@
 struct heap{
     int *dizi;
     int kapasite;
-    int ust;//dizideki ilk boþ yeri tutar
+    int ust;//dizideki ilk boş yeri tutar
 };
 //-------------------------------------------------------------------------------------//
 struct heap* heap_olustur(int kapasite){
@@ -19,20 +19,20 @@ void heap_ekle(struct heap *heapfonk,int sayi){
     if(heapfonk->kapasite <= heapfonk->ust)
         heap_kaparttir(heapfonk);
     heapfonk->dizi[heapfonk->ust]=sayi;
-    //sayý eklendikten sonra heap bozuldu mu kontrolü yapýlýr
+    //sayı eklendikten sonra heap bozuldu mu kontrolü yapılır
     int parentindex;
-    if((heapfonk->ust)%2==0)//eðer kendi index'i çift sayý ise parent'ýnýn saðýdýr
-        parentindex=(heapfonk->ust -2)/2;//saðdaysa 2 çýkarýlýr (i+2)*2'nin tersi
+    if((heapfonk->ust)%2==0)//eğer kendi index'i çift sayı ise parent'ının sağıdır
+        parentindex=(heapfonk->ust -2)/2;//sağdaysa 2 çıkarılır (i+2)*2'nin tersi
     else
-        parentindex=(heapfonk->ust -1)/2;//saðdaysa 1 çýkarýlýr (i+1)*2'nin tersi
+        parentindex=(heapfonk->ust -1)/2;//sağdaysa 1 çıkarılır (i+1)*2'nin tersi
     int ust=heapfonk->ust;
     while(1){
-        if(heapfonk->dizi[ust]>heapfonk->dizi[parentindex]){//eðer parenttan büyük ise bozukluk vardýr
-            //parent ile child'ýn yeri deðiþtirilir
+        if(heapfonk->dizi[ust]>heapfonk->dizi[parentindex]){//eğer parenttan büyük ise bozukluk vardır
+            //parent ile child'ın yeri değiştirilir
 			int temp=heapfonk->dizi[parentindex];
             heapfonk->dizi[parentindex]=heapfonk->dizi[ust];
             heapfonk->dizi[ust]=temp;
-            //roota gelinmediði sürece indexler yukarýya taþýnýr
+            //roota gelinmediği sürece indexler yukarıya taşınır
             if(parentindex==0)//parent==root
                 break;
             ust=parentindex;
@@ -41,7 +41,7 @@ void heap_ekle(struct heap *heapfonk,int sayi){
             else
                 parentindex=(parentindex-1)/2;
         }
-        else//bozukluk yoksa döngüden çýkýlýr
+        else//bozukluk yoksa döngüden çıkılır
             break;
     }
     (heapfonk->ust)++;
@@ -57,7 +57,7 @@ void heap_yaz(struct heap *heapfonk){
 //-------------------------------------------------------------------------------------//
 void heap_sil(struct heap *heapfonk,int sayi){
     int i=0;
-    while(1){//sayi var mi diye bakýlýr. Sayi bulunursa i, sayinin indexidir
+    while(1){//sayi var mı diye bakılır. Sayi bulunursa i, sayinin indexidir
         if(i==heapfonk->ust){
             printf("silinmek istenen sayi yok...\n");
             return;
@@ -66,19 +66,19 @@ void heap_sil(struct heap *heapfonk,int sayi){
             break;
         i++;
     }
-    while(1){//silinen düðümün yerine alttan yeni düðüm getirilir.
-    	/*Burada 4 ana durum vardýr
-    	 *	1.durum için altta eleman kalmadýysa dizinin sonundaki eleman kendisine atanýr ve üst bir azaltýlýr. Bundan sonra heap kontrolü yapýlýr 
-    	 *	2.durum için düðümün sadece solu kalmýþsa o yukarý taþýnýr ve heap'in son elemaný olduðundan üst bir azaltýlýr. Bozulma olmadýðýndan kontrole gerek yoktur
-    	 *	ilk iki koþul doðru deðilse yukarýya taþýnacak olan düðüm sað veya solundan hangisi büyükse odur.
+    while(1){//silinen düğümün yerine alttan yeni düğüm getirilir.
+    	/*Burada 4 ana durum vardır
+    	 *	1.durum için altta eleman kalmadıysa dizinin sonundaki eleman kendisine atanır ve üst bir azaltılır. Bundan sonra heap kontrolü yapılır 
+    	 *	2.durum için düğümün sadece solu kalmışsa o yukarı taşınır ve heap'in son elemanı olduğundan üst bir azaltılır. Bozulma olmadığından kontrole gerek yoktur
+    	 *	ilk iki koşul doğru değilse yukarıya taşınacak olan düğüm sağ veya solundan hangisi büyükse odur.
     	 *	3.durum için sol büyükse
-    	 *	4.durum için sað büyükse
-    	 *	3. ve 4. durumlardan sonra index aþaðý taþýnýr
+    	 *	4.durum için sağ büyükse
+    	 *	3. ve 4. durumlardan sonra index aşağı taşınır
 		 */ 
         if(i*2+2>heapfonk->ust){//1.durum
             heapfonk->dizi[i]=heapfonk->dizi[heapfonk->ust-1];
             (heapfonk->ust)--;
-            //ekle fonksiyonundaki gibi heapify yapýlýr 
+            //ekle fonksiyonundaki gibi heapify yapılır 
             int parentindex;
             if(i%2==0)
                 parentindex=(i-2)/2;
@@ -89,7 +89,7 @@ void heap_sil(struct heap *heapfonk,int sayi){
                     int temp=heapfonk->dizi[parentindex];
                     heapfonk->dizi[parentindex]=heapfonk->dizi[i];
                     heapfonk->dizi[i]=temp;
-                    //roota gelinmediði sürece indexler yukarýya taþýnýr
+                    //roota gelinmediği sürece indexler yukarıya taşınır
                     if(parentindex==0)//parent==root
                         break;
                     i=parentindex;
@@ -122,7 +122,7 @@ void heap_sil(struct heap *heapfonk,int sayi){
 void heap_kaparttir(struct heap *fonkheap){
     int *dizi=malloc(sizeof(int)*(fonkheap->kapasite*2));
     int i;
-    for(i=0;i<fonkheap->ust;i++){//tüm elemanlar yeni diziye atanýr
+    for(i=0;i<fonkheap->ust;i++){//tüm elemanlar yeni diziye atanır
         dizi[i]=fonkheap->dizi[i];
     }
     fonkheap->dizi=dizi;
