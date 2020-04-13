@@ -26,7 +26,7 @@ struct liste* siraliekle(struct liste *list,int sayi){
 		geri->link=olustur(sayi);
 		return kok;
 	}
-	if(list->veri==sayi){//ayný sayý durumu
+	if(list->veri==sayi){//aynı sayı durumu
 		printf("sayi zaten var..\n");
 		return kok;
 	}
