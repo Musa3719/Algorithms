@@ -6,7 +6,7 @@ struct stack{
 };
 //---------------------------------------------------------------------------------------------//
 struct stack* stackyarat(int sayi){
-	struct stack *yeni=(struct stack*)malloc(sizeof(struct stack));
+    struct stack *yeni=(struct stack*)malloc(sizeof(struct stack));
     yeni->veri=sayi;
     yeni->link=NULL;
     return yeni;
@@ -28,16 +28,16 @@ void stackpush(struct stack **listebasi,int sayi){
 //---------------------------------------------------------------------------------------------//
 void stackyaz(struct stack *listebasi){
 	if(listebasi==NULL)
-		printf("stack bos");
+	    printf("stack bos");
 	while(listebasi!=NULL){
-        printf("%d ",listebasi->veri);
-        listebasi=listebasi->link;
+            printf("%d ",listebasi->veri);
+            listebasi=listebasi->link;
 	}
 	printf("\n");
 }
 //---------------------------------------------------------------------------------------------//
 void stackpop(struct stack **listebasi){//
-	struct stack *silinecek=*listebasi;
+    struct stack *silinecek=*listebasi;
     *listebasi=(*listebasi)->link;
     printf("%d silindi\n",silinecek->veri);
     free(silinecek);
